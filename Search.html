@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Twigg Search</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        html {
+            background: #111;
+        }
+
+
+        body {
+
+            background: #000;
+
+            color: #fff;
+
+            font-family: Arial, sans-serif;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .search-page {
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            background: #000;
+
+            padding-bottom: 30px;
+
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .top-bar {
+
+            position: sticky;
+
+            top: 0;
+
+            width: 100%;
+
+            max-width: 430px;
+
+            height: 72px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 14px;
+
+            background: rgba(0,0,0,0.86);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            z-index: 1000;
+
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-button {
+
+            width: 42px;
+
+            height: 42px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background: rgba(25,25,25,0.75);
+
+            color: #fff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .back-button:hover {
+
+            transform: scale(1.08);
+
+            background: rgba(255,255,255,0.12);
+
+        }
+
+
+        .back-button svg {
+
+            width: 20px;
+
+            height: 20px;
+
+            stroke: currentColor;
+
+            fill: none;
+
+            stroke-width: 1.8;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+
+        }
+
+
+        /* =====================================================
+           SEARCH WRAPPER
+        ===================================================== */
+
+        .search-wrapper {
+
+            position: relative;
+
+            flex: 1;
+
+        }
+
+
+        /* =====================================================
+           SEARCH BAR
+        ===================================================== */
+
+        .search-bar {
+
+            width: 100%;
+
+            height: 44px;
+
+            border-radius: 22px;
+
+            border: 1px solid rgba(255,255,255,0.13);
+
+            background: rgba(25,25,25,0.88);
+
+            color: #fff;
+
+            outline: none;
+
+            padding:
+
+                0
+                45px
+                0
+                18px;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .search-bar::placeholder {
+
+            color: rgba(255,255,255,0.45);
+
+        }
+
+
+        .search-bar:focus {
+
+            border-color: rgba(255,255,255,0.28);
+
+            background: rgba(30,30,30,0.96);
+
+            box-shadow:
+                0 0 0 3px rgba(168,85,247,0.08),
+                0 0 20px rgba(168,85,247,0.12);
+
+        }
+
+
+        /* =====================================================
+           SEARCH ICON
+        ===================================================== */
+
+        .search-icon {
+
+            position: absolute;
+
+            right: 16px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 18px;
+
+            height: 18px;
+
+            pointer-events: none;
+
+            color: rgba(255,255,255,0.65);
+
+        }
+
+
+        .search-icon svg {
+
+            width: 100%;
+
+            height: 100%;
+
+            stroke: currentColor;
+
+            fill: none;
+
+            stroke-width: 1.8;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .content {
+
+            width: 100%;
+
+            max-width: 430px;
+
+            margin: 0 auto;
+
+            padding: 18px 12px 30px;
+
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            margin:
+
+                4px
+                2px
+                14px;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY GRID
+        ===================================================== */
+
+        .category-grid {
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 12px;
+
+            transition:
+                opacity 0.25s ease,
+                transform 0.25s ease;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY CARD
+        ===================================================== */
+
+        .category-card {
+
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            border-radius: 17px;
+
+            border: 1px solid rgba(255,255,255,0.10);
+
+            background: #111;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 24px rgba(0,0,0,0.35);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY IMAGE
+        ===================================================== */
+
+        .category-card img {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transform: scale(1);
+
+            transition:
+                transform 0.45s ease;
+
+        }
+
+
+        /* =====================================================
+           DARK GRADIENT
+        ===================================================== */
+
+        .category-gradient {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.82) 0%,
+                    rgba(0,0,0,0.35) 45%,
+                    rgba(0,0,0,0.05) 100%
+                );
+
+            transition:
+                background 0.35s ease;
+
+            z-index: 2;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY NAME
+        ===================================================== */
+
+        .category-name {
+
+            position: absolute;
+
+            left: 14px;
+
+            right: 10px;
+
+            bottom: 13px;
+
+            z-index: 3;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            line-height: 1.1;
+
+            color: #fff;
+
+            transition:
+                font-size 0.3s ease,
+                transform 0.3s ease;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY HOVER
+        ===================================================== */
+
+        .category-card:hover {
+
+            transform: translateY(-2px);
+
+            border-color: rgba(255,255,255,0.22);
+
+            box-shadow:
+
+                0 12px 30px rgba(0,0,0,0.55),
+
+                0 0 20px rgba(168,85,247,0.10);
+
+        }
+
+
+        .category-card:hover img {
+
+            transform: scale(1.10);
+
+        }
+
+
+        .category-card:hover .category-gradient {
+
+            background:
+
+                linear-gradient(
+                    to top,
+                    rgba(0,0,0,0.96) 0%,
+                    rgba(0,0,0,0.68) 55%,
+                    rgba(0,0,0,0.18) 100%
+                );
+
+        }
+
+
+        .category-card:hover .category-name {
+
+            font-size: 20px;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           SUGGESTIONS
+        ===================================================== */
+
+        .suggestions {
+
+            display: none;
+
+            width: 100%;
+
+            padding-top: 4px;
+
+        }
+
+
+        .suggestions.visible {
+
+            display: block;
+
+        }
+
+
+        /* =====================================================
+           SUGGESTION TITLE
+        ===================================================== */
+
+        .suggestion-title {
+
+            font-size: 13px;
+
+            color: rgba(255,255,255,0.50);
+
+            margin:
+
+                0
+                4px
+                12px;
+
+        }
+
+
+        /* =====================================================
+           SUGGESTION ITEM
+        ===================================================== */
+
+        .suggestion-item {
+
+            width: 100%;
+
+            min-height: 54px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 8px 10px;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease;
+
+        }
+
+
+        .suggestion-item:hover {
+
+            background: rgba(255,255,255,0.07);
+
+        }
+
+
+        /* =====================================================
+           SUGGESTION ICON
+        ===================================================== */
+
+        .suggestion-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.07);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: rgba(255,255,255,0.70);
+
+        }
+
+
+        .suggestion-icon svg {
+
+            width: 18px;
+
+            height: 18px;
+
+            stroke: currentColor;
+
+            fill: none;
+
+            stroke-width: 1.7;
+
+            stroke-linecap: round;
+
+            stroke-linejoin: round;
+
+        }
+
+
+        /* =====================================================
+           SUGGESTION TEXT
+        ===================================================== */
+
+        .suggestion-text {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        .suggestion-name {
+
+            font-size: 14px;
+
+            color: #fff;
+
+        }
+
+
+        .suggestion-category {
+
+            margin-top: 3px;
+
+            font-size: 10px;
+
+            color: rgba(255,255,255,0.42);
+
+        }
+
+
+        /* =====================================================
+           NO RESULTS
+        ===================================================== */
+
+        .no-results {
+
+            display: none;
+
+            padding: 40px 10px;
+
+            text-align: center;
+
+            color: rgba(255,255,255,0.45);
+
+            font-size: 13px;
+
+        }
+
+
+        .no-results.visible {
+
+            display: block;
+
+        }
+
+
+        /* =====================================================
+           DESKTOP PREVIEW
+        ===================================================== */
+
+        @media (min-width: 700px) {
+
+            body {
+
+                background: #111;
+
+            }
+
+
+            .search-page {
+
+                width: 430px;
+
+                margin: 0 auto;
+
+                min-height: 100vh;
+
+                background: #000;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .content {
+
+                padding-left: 10px;
+
+                padding-right: 10px;
+
+            }
+
+
+            .category-grid {
+
+                gap: 10px;
+
+            }
+
+
+            .category-name {
+
+                font-size: 14px;
+
+            }
+
+
+            .category-card:hover .category-name {
+
+                font-size: 18px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="search-page">
+
+
+    <!-- =====================================================
+         TOP BAR
+    ===================================================== -->
+
+    <header class="top-bar">
+
+
+        <!-- BACK -->
+
+        <button
+            class="back-button"
+            id="backButton"
+            aria-label="Go back">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M19 12H5"></path>
+
+                <path d="M12 19l-7-7 7-7"></path>
+
+            </svg>
+
+        </button>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-wrapper">
+
+            <input
+                type="text"
+                class="search-bar"
+                id="searchInput"
+                placeholder="Search creators, services..."
+                autocomplete="off">
+
+            <div class="search-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <circle
+                        cx="10.5"
+                        cy="10.5"
+                        r="6">
+                    </circle>
+
+                    <line
+                        x1="15"
+                        y1="15"
+                        x2="21"
+                        y2="21">
+                    </line>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <main class="content">
+
+
+        <!-- =================================================
+             CATEGORIES
+        ================================================= -->
+
+        <section id="categoriesSection">
+
+
+            <h2 class="section-title">
+                Explore categories
+            </h2>
+
+
+            <div class="category-grid">
+
+
+                <!-- 1 -->
+
+                <div class="category-card"
+                     data-category="Beauty">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9"
+                        alt="Beauty">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Beauty
+                    </div>
+
+                </div>
+
+
+                <!-- 2 -->
+
+                <div class="category-card"
+                     data-category="Digital">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085"
+                        alt="Digital">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Digital
+                    </div>
+
+                </div>
+
+
+                <!-- 3 -->
+
+                <div class="category-card"
+                     data-category="Production">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb"
+                        alt="Production">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Production
+                    </div>
+
+                </div>
+
+
+                <!-- 4 -->
+
+                <div class="category-card"
+                     data-category="Events">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30"
+                        alt="Events">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Events
+                    </div>
+
+                </div>
+
+
+                <!-- 5 -->
+
+                <div class="category-card"
+                     data-category="Marketing">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1460925895917-afdab827c52f"
+                        alt="Marketing">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Marketing
+                    </div>
+
+                </div>
+
+
+                <!-- 6 -->
+
+                <div class="category-card"
+                     data-category="Home & Interiors">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6"
+                        alt="Home & Interiors">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Home & Interiors
+                    </div>
+
+                </div>
+
+
+                <!-- 7 -->
+
+                <div class="category-card"
+                     data-category="Graphic Design">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1558655146-9f40138edfeb"
+                        alt="Graphic Design">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Graphic Design
+                    </div>
+
+                </div>
+
+
+                <!-- 8 -->
+
+                <div class="category-card"
+                     data-category="Photography">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
+                        alt="Photography">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Photography
+                    </div>
+
+                </div>
+
+
+                <!-- 9 -->
+
+                <div class="category-card"
+                     data-category="Video & Film">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1485846234645-a62644f84728"
+                        alt="Video & Film">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Video & Film
+                    </div>
+
+                </div>
+
+
+                <!-- 10 -->
+
+                <div class="category-card"
+                     data-category="Web Development">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1547658719-da2b51169166"
+                        alt="Web Development">
+
+                    <div class="category-gradient"></div>
+
+                    <div class="category-name">
+                        Web Development
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SUGGESTIONS
+        ================================================= -->
+
+        <section
+            class="suggestions"
+            id="suggestions">
+
+
+            <div class="suggestion-title">
+                Suggestions
+            </div>
+
+
+            <!-- SUGGESTION 1 -->
+
+            <div class="suggestion-item"
+                 data-search="Logo Design">
+
+                <div class="suggestion-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10.5"
+                            cy="10.5"
+                            r="6">
+                        </circle>
+
+                        <line
+                            x1="15"
+                            y1="15"
+                            x2="21"
+                            y2="21">
+                        </line>
+
+                    </svg>
+
+                </div>
+
+                <div class="suggestion-text">
+
+                    <div class="suggestion-name">
+                        Logo Design
+                    </div>
+
+                    <div class="suggestion-category">
+                        Graphic Design
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUGGESTION 2 -->
+
+            <div class="suggestion-item"
+                 data-search="Branding">
+
+                <div class="suggestion-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10.5"
+                            cy="10.5"
+                            r="6">
+                        </circle>
+
+                        <line
+                            x1="15"
+                            y1="15"
+                            x2="21"
+                            y2="21">
+                        </line>
+
+                    </svg>
+
+                </div>
+
+                <div class="suggestion-text">
+
+                    <div class="suggestion-name">
+                        Branding
+                    </div>
+
+                    <div class="suggestion-category">
+                        Digital
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUGGESTION 3 -->
+
+            <div class="suggestion-item"
+                 data-search="Video Editing">
+
+                <div class="suggestion-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10.5"
+                            cy="10.5"
+                            r="6">
+                        </circle>
+
+                        <line
+                            x1="15"
+                            y1="15"
+                            x2="21"
+                            y2="21">
+                        </line>
+
+                    </svg>
+
+                </div>
+
+                <div class="suggestion-text">
+
+                    <div class="suggestion-name">
+                        Video Editing
+                    </div>
+
+                    <div class="suggestion-category">
+                        Video & Film
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUGGESTION 4 -->
+
+            <div class="suggestion-item"
+                 data-search="Social Media Design">
+
+                <div class="suggestion-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10.5"
+                            cy="10.5"
+                            r="6">
+                        </circle>
+
+                        <line
+                            x1="15"
+                            y1="15"
+                            x2="21"
+                            y2="21">
+                        </line>
+
+                    </svg>
+
+                </div>
+
+                <div class="suggestion-text">
+
+                    <div class="suggestion-name">
+                        Social Media Design
+                    </div>
+
+                    <div class="suggestion-category">
+                        Marketing
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUGGESTION 5 -->
+
+            <div class="suggestion-item"
+                 data-search="Packaging Design">
+
+                <div class="suggestion-icon">
+
+                    <svg viewBox="0 0 24 24">
+
+                        <circle
+                            cx="10.5"
+                            cy="10.5"
+                            r="6">
+                        </circle>
+
+                        <line
+                            x1="15"
+                            y1="15"
+                            x2="21"
+                            y2="21">
+                        </line>
+
+                    </svg>
+
+                </div>
+
+                <div class="suggestion-text">
+
+                    <div class="suggestion-name">
+                        Packaging Design
+                    </div>
+
+                    <div class="suggestion-category">
+                        Graphic Design
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="no-results"
+                id="noResults">
+
+                No matching services found.
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const categoriesSection =
+        document.getElementById("categoriesSection");
+
+    const suggestions =
+        document.getElementById("suggestions");
+
+    const noResults =
+        document.getElementById("noResults");
+
+    const backButton =
+        document.getElementById("backButton");
+
+    const suggestionItems =
+        document.querySelectorAll(".suggestion-item");
+
+
+    /* =====================================================
+       SHOW SEARCH MODE
+    ===================================================== */
+
+    function showSearchMode() {
+
+        categoriesSection.style.display = "none";
+
+        suggestions.classList.add("visible");
+
+        filterSuggestions();
+
+    }
+
+
+    /* =====================================================
+       SHOW CATEGORY MODE
+    ===================================================== */
+
+    function showCategoryMode() {
+
+        categoriesSection.style.display = "block";
+
+        suggestions.classList.remove("visible");
+
+    }
+
+
+    /* =====================================================
+       SEARCH FOCUS
+    ===================================================== */
+
+    searchInput.addEventListener(
+        "focus",
+        () => {
+
+            showSearchMode();
+
+        }
+    );
+
+
+    /* =====================================================
+       SEARCH INPUT
+    ===================================================== */
+
+    searchInput.addEventListener(
+        "input",
+        () => {
+
+            showSearchMode();
+
+            filterSuggestions();
+
+        }
+    );
+
+
+    /* =====================================================
+       FILTER SUGGESTIONS
+    ===================================================== */
+
+    function filterSuggestions() {
+
+        const query =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        let visibleCount = 0;
+
+
+        suggestionItems.forEach(
+            item => {
+
+                const text =
+                    item.dataset.search
+                        .toLowerCase();
+
+
+                if (
+                    query === "" ||
+                    text.includes(query)
+                ) {
+
+                    item.style.display =
+                        "flex";
+
+                    visibleCount++;
+
+                }
+
+                else {
+
+                    item.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+        if (visibleCount === 0) {
+
+            noResults.classList.add(
+                "visible"
+            );
+
+        }
+
+        else {
+
+            noResults.classList.remove(
+                "visible"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLICK OUTSIDE SEARCH BAR
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        event => {
+
+            const clickedInsideSearch =
+                event.target.closest(
+                    ".search-wrapper"
+                );
+
+
+            if (!clickedInsideSearch) {
+
+                /*
+                 * Only return to categories if
+                 * the search bar was previously active.
+                 */
+
+                if (
+                    suggestions.classList.contains(
+                        "visible"
+                    )
+                ) {
+
+                    showCategoryMode();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       BACK BUTTON
+       ===================================================== */
+
+    backButton.addEventListener(
+        "click",
+        () => {
+
+            /*
+             * Go back to the page that opened
+             * this Search.html page.
+             */
+
+            if (window.history.length > 1) {
+
+                window.history.back();
+
+            }
+
+            else {
+
+                window.location.href =
+                    "Creators.html";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CATEGORY CLICK
+       ===================================================== */
+
+    const categoryCards =
+        document.querySelectorAll(
+            ".category-card"
+        );
+
+
+    categoryCards.forEach(
+        card => {
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    const category =
+                        card.dataset.category;
+
+                    /*
+                     * Put selected category
+                     * into search bar.
+                     */
+
+                    searchInput.value =
+                        category;
+
+                    searchInput.focus();
+
+                    showSearchMode();
+
+                    filterSuggestions();
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       SUGGESTION CLICK
+       ===================================================== */
+
+    suggestionItems.forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    searchInput.value =
+                        item.dataset.search;
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
