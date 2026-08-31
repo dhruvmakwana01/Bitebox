@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 5px;
+            padding: 10px;
             color: white;
         }
 
@@ -58,6 +58,68 @@
         nav #menu ul a:hover {
             color: red;
         }
+
+        body {
+            height: 100vh;
+            width: 100%;
+        }
+
+        header {
+            height: 10vh;
+        }
+
+        main {
+            height: 80vh;
+            border: 2px solid black
+        }
+
+        footer {
+            height: 10vh;
+        }
+
+        .main_content {
+            text-align: center;
+        }
+
+        .product_container {
+            border: 2px solid black;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            padding: 20px
+        }
+
+        .card1 {
+            width: 250px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+
+        .card2 {
+            width: 250px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+
+        .product_logo1 {
+            height: 200px;
+            width: 100%
+        }
+
+        .product_logo1 img {
+            height: 200px;
+            width: 100%;
+        }
+
+        .product_logo2 {
+            height: 200px;
+            width: 100%
+        }
+
+        .product_logo2 img {
+            height: 200px;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -81,8 +143,45 @@
             </div>
         </nav>
     </header>
-    <main></main>
-    <footer></footer>
+    <main>
+        <div class="main_content">
+            <h2>Our Products</h2>
+            <div class="product_container">
+                <div class="card1">
+                    <section class="product_logo1">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4iCgokFVdXFvB6Dvo_wbWongVA4UyXakcCyUH6p-zbg&s=10" />
+                    </section>
+                    <section class="product_details">
+                        <p>Juicy grilled beef patty, fresh lettuce, melted cheese, and a delicious house sauce,
+                            all tucked into a soft toasted bun.</p>
+                        <p>₹199/-</p>
+                        <button>Add</button>
+                    </section>
+                </div>
+                <div class="card2">
+                    <section class="product_logo2">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4iCgokFVdXFvB6Dvo_wbWongVA4UyXakcCyUH6p-zbg&s=10" />
+                    </section>
+                    <section class="product_details">
+                        <p>Juicy grilled beef patty, fresh lettuce, melted cheese, and a delicious house
+                            sauce,
+                            all tucked into a soft toasted bun.</p>
+                        <p>₹199/-</p>
+                        <button>Add</button>
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>Footer Content Under Construction</p>
+        </div>
+
+    </footer>
 </body>
 
 </html>
