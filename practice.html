@@ -4,9 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice</title>
-
-
+    <title>Bitebox</title>
     <style>
         * {
             margin: 0;
@@ -24,63 +22,159 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            padding: 10px;
             color: white;
+        }
+
+        nav .logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 100%;
+        }
+
+        nav .menu ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 20px
+        }
+
+        nav .menu ul a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
         }
 
         nav .logo:hover {
             cursor: pointer;
         }
 
-        nav .logo img {
-            width: 50px;
-            height: 50px;
-            border-radius: 100%;
-        }
-
-        nav .menu ul {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
-            color: white;
-        }
-
-        nav .menu ul a {
-            text-decoration: none;
-            font-size: 20px;
-        }
-
         nav .menu ul a:hover {
             color: red;
         }
+
+        body {
+            height: 100vh;
+            width: 100%
+        }
+
+        header {
+            height: 10vh
+        }
+
+        main {
+            height: 80vh;
+            border: 2px solid black;
+        }
+
+        footer {
+            height: 10vh
+        }
+
+        .main_content {
+            text-align: center;
+        }
+
+        .product_container {
+            border: 2px solid black;
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 5px;
+            padding: 20px;
+        }
+
+        .card1 {
+            width: 250px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+
+        .card2 {
+            width: 250px;
+            border: 2px solid black;
+            overflow: hidden;
+        }
+
+        .product_logo1 {
+            height: 200px;
+            width: 100%;
+        }
+
+        .product_logo1 img {
+            height: 200px;
+            width: 100%;
+        }
+
+        .product_logo2 {
+            height: 200px;
+            width: 100%;
+        }
+
+        .product_logo2 img {
+            height: 200px;
+            width: 100%;
+        }
+
+
     </style>
 </head>
 
 <body>
-
-    <nav>
-
-        <div class="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlEAIoinTroj6NXY2-5H8J8QeB-NbR_bCWDYC4Foxwmw&s=10"
-                alt="Practice Image">
-
-            <h2>Practice</h2>
+    <header>
+        <nav>
+            <div class="logo">
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXZLLp0jfPKu_NFlp5z5zGnvfX7ebtEWgCm06VSXKE33eQtva9JFwwWow&s=10" />
+                <h2>Bitebox</h2>
+            </div>
+            <div class="menu">
+                <ul style="list-style-type: none">
+                    <li><a>Home</a></li>
+                    <li><a>About us</a></li>
+                    <li><a>Contact us</a></li>
+                    <li><a>Cart</a></li>
+                    <li><a>Login</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="main_content">
+            <h2>Our Products</h2>
+            <div class="product_container">
+                <div class="card1">
+                    <section class="product_logo1">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4iCgokFVdXFvB6Dvo_wbWongVA4UyXakcCyUH6p-zbg&s=10" />
+                    </section>
+                    <section class="product_detail1">
+                        <p>Juicy grilled beef patty, fresh lettuce, melted cheese, and a delicious house sauce,
+                            all tucked into a soft toasted bun.</p>
+                        <p>₹199/-</p>
+                        <button>Add</button>
+                    </section>
+                </div>
+                <div class="card2">
+                    <section class="product_logo2">
+                        <img
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4iCgokFVdXFvB6Dvo_wbWongVA4UyXakcCyUH6p-zbg&s=10" />
+                    </section>
+                    <section class="product_detail2">
+                        <p>Juicy grilled beef patty, fresh lettuce, melted cheese, and a delicious house sauce,
+                            all tucked into a soft toasted bun.</p>
+                        <p>₹199/-</p>
+                        <button>Add</button>
+                    </section>
+                </div>
+            </div>
         </div>
-
-        <div class="menu">
-            <ul style="list-style-type: none;">
-                <li><a>Home</a></li>
-                <li><a>About</a></li>
-                <li><a>Contact Us</a></li>
-                <li><a>Login</a></li>
-            </ul>
+    </main>
+    <footer>
+        <div class="footer_content">
+            <p>Footer Content Under Construction</p>
         </div>
-
-    </nav>
-
+    </footer>
 </body>
-<main></main>
-<footer></footer>
 
 </html>
