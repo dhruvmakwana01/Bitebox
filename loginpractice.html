@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Welcome Back</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='225 425 220 240'%3E%3Cdefs%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='217.2762' y1='575.5398' x2='365.8892' y2='438.8525'%3E%3Cstop offset='0' stop-color='%23B90066'/%3E%3Cstop offset='.5335' stop-color='%23FB0838'/%3E%3Cstop offset='1' stop-color='%23F6801E'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M295.2 567.6v-130c-38.4 15.1-65.5 52.5-65.5 96.2 0 27.6 10.8 52.6 28.4 71.2l23.7-13.9c8.3-4.9 13.4-13.8 13.4-23.4z'/%3E%3Cpath fill='url(%23g)' d='M338 430.6c-9.8-.5-19.4.4-28.5 2.5v27.4c0 9.7 5.2 18.7 13.6 23.5l112.1 64.4c.6-4.1.9-8.3 1-12.5-2.5-55.4-46.4-102.7-101.9-105.3z'/%3E%3Cpath fill='url(%23g)' d='M380.8 551.6l-113.2 62.5c3.2 2.6 6.6 5.1 10.2 7.3 15.3 9.7 32.4 14.9 49.6 15.8 6.7.4 11.8 6.4 11.1 13 0 .1 0 .1 0 .2-1.4 7.6-5.2 16.5-5.2 16.5s72.7-33.5 98-100.7L408 552.1c-8.3-5-18.7-5.2-27.2-.5z'/%3E%3C/svg%3E">
+    <style>
+        /* =========================================================
+   RESET & BASE
+========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+            background: #fff;
+            color: #111;
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+        }
+
+
+        /* =========================================================
+   BACKGROUND
+   Direction: bottom-left → top-right
+========================================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            background: #fff;
+            pointer-events: none;
+        }
+
+        .background::before,
+        .background::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.68;
+        }
+
+
+        /* Bottom-left */
+        .background::before {
+            width: 70vw;
+            height: 70vh;
+            left: -10vw;
+            bottom: -10vh;
+
+            border-radius: 50% 60% 40% 70%;
+
+            background:
+                radial-gradient(circle at 20% 75%,
+                    rgba(255, 150, 115, 0.78) 0,
+                    transparent 42%),
+                radial-gradient(circle at 45% 60%,
+                    rgba(255, 105, 185, 0.78) 0,
+                    transparent 45%),
+                radial-gradient(circle at 65% 40%,
+                    rgba(120, 205, 255, 0.78) 0,
+                    transparent 42%),
+                radial-gradient(circle at 85% 20%,
+                    rgba(100, 170, 255, 0.78) 0,
+                    transparent 42%);
+
+            filter: blur(65px);
+            animation: float-form-one 25s ease-in-out infinite;
+        }
+
+
+        /* Top-right */
+        .background::after {
+            width: 60vw;
+            height: 60vh;
+            top: -15vh;
+            right: -10vw;
+
+            border-radius: 60% 40% 70% 50%;
+
+            background:
+                radial-gradient(circle at 80% 20%,
+                    rgba(255, 205, 90, 0.76) 0,
+                    transparent 47%),
+                radial-gradient(circle at 60% 40%,
+                    rgba(100, 170, 255, 0.76) 0,
+                    transparent 42%),
+                radial-gradient(circle at 40% 60%,
+                    rgba(255, 105, 185, 0.76) 0,
+                    transparent 42%),
+                radial-gradient(circle at 20% 80%,
+                    rgba(255, 150, 115, 0.76) 0,
+                    transparent 42%);
+
+            filter: blur(60px);
+            animation: float-form-two 20s ease-in-out infinite;
+        }
+
+
+        /* =========================================================
+   GRAIN
+========================================================= */
+
+        .grain {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+
+            opacity: 0.025;
+
+            background-image:
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+   PAGE
+========================================================= */
+
+        .login-page {
+            position: relative;
+            z-index: 3;
+
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =========================================================
+   BRAND
+========================================================= */
+
+        .brand {
+            position: absolute;
+            top: 38px;
+            left: 48px;
+            z-index: 5;
+            width: 130px;
+        }
+
+        .brand svg {
+            display: block;
+            width: 100%;
+        }
+
+
+        /* =========================================================
+   LOGIN CARD
+========================================================= */
+
+        .login-card {
+            position: relative;
+
+            width: min(440px, calc(100vw - 40px));
+            min-height: 510px;
+            padding: 48px;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255, 255, 255, 0.78);
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.24);
+
+            backdrop-filter:
+                blur(42px) saturate(135%);
+
+            -webkit-backdrop-filter:
+                blur(42px) saturate(135%);
+
+            box-shadow:
+                0 40px 100px rgba(0, 0, 0, 0.14),
+                0 18px 45px rgba(0, 0, 0, 0.09),
+                0 6px 18px rgba(0, 0, 0, 0.06),
+                0 0 0 1px rgba(255, 255, 255, 0.10),
+                inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+
+            animation: card-appear 0.8s cubic-bezier(.2, .8, .2, 1);
+        }
+
+
+        /* Glass highlight */
+        .login-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.32) 0%,
+                    rgba(255, 255, 255, 0.08) 28%,
+                    rgba(255, 255, 255, 0.015) 55%,
+                    rgba(255, 255, 255, 0.10) 100%);
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+   CARD GLOW
+========================================================= */
+
+        .card-glow {
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -90px;
+            right: -90px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(135deg,
+                    #ff9a70,
+                    #72cfff,
+                    #ff70b8);
+
+            filter: blur(60px);
+            opacity: 0.12;
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+   CONTENT
+========================================================= */
+
+        .login-content {
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /* =========================================================
+   HEADING
+========================================================= */
+
+        .heading {
+            margin-bottom: 42px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .eyebrow p {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #555;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.45);
+        }
+
+        .dot,
+        .period {
+            display: inline-block;
+            border-radius: 50%;
+            background:
+                linear-gradient(135deg,
+                    #b90066,
+                    #fb0838,
+                    #f6801e);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+        }
+
+        .heading h1 {
+            margin-top: 13px;
+
+            color: #111;
+
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            letter-spacing: -3px;
+
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.45);
+        }
+
+        .period {
+            width: 8px;
+            height: 8px;
+            margin-left: 3px;
+            vertical-align: baseline;
+        }
+
+
+        /* =========================================================
+   FORM
+========================================================= */
+
+        #loginForm {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .field label {
+            color: #222;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+        }
+
+
+        /* Password header */
+        .password-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .password-header a {
+            color: #555;
+            font-size: 10px;
+            text-decoration: none;
+
+            transition: color 0.2s ease;
+        }
+
+        .password-header a:hover {
+            color: #111;
+        }
+
+
+        /* =========================================================
+   INPUTS
+========================================================= */
+
+        .field input {
+            width: 100%;
+            height: 54px;
+
+            padding: 0 16px;
+
+            border: 1px solid rgba(0, 0, 0, 0.09);
+            border-radius: 15px;
+            outline: none;
+
+            background: rgba(255, 255, 255, 0.38);
+
+            color: #111;
+            font: inherit;
+            font-size: 13px;
+
+            transition:
+                background 0.25s ease,
+                border 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .field input::placeholder {
+            color: #777;
+            opacity: 1;
+        }
+
+        .field input:focus {
+            border-color: #111;
+
+            background: rgba(255, 255, 255, 0.72);
+
+            box-shadow:
+                0 0 0 4px rgba(0, 0, 0, 0.035);
+        }
+
+
+        /* =========================================================
+   PASSWORD
+========================================================= */
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .show-password {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+
+            transform: translateY(-50%);
+
+            border: 0;
+            background: transparent;
+
+            color: #555;
+
+            font: inherit;
+            font-size: 10px;
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .show-password:hover {
+            color: #111;
+        }
+
+
+        /* =========================================================
+   SIGN IN BUTTON
+========================================================= */
+
+        .signin-button {
+            position: relative;
+
+            width: 100%;
+            height: 56px;
+            margin-top: 4px;
+            padding: 0 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            overflow: hidden;
+
+            border: 0;
+            border-radius: 16px;
+
+            background:
+                linear-gradient(110deg,
+                    #f58a4f 0%,
+                    #f36b67 24%,
+                    #ee5b83 48%,
+                    #d94b8e 72%,
+                    #bd2675 100%);
+
+            background-size: 180% 100%;
+
+            color: #fff;
+
+            font: inherit;
+            font-size: 12px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 26px rgba(185, 0, 102, 0.14);
+
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+
+        /* Hover gradient */
+        .signin-button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(110deg,
+                    #c72d7b 0%,
+                    #e94d88 20%,
+                    #f85f6b 40%,
+                    #f58a4f 60%,
+                    #ee5b83 80%,
+                    #b90066 100%);
+
+            background-size: 250% 100%;
+
+            opacity: 0;
+
+            transition: opacity 0.45s ease;
+        }
+
+        .signin-button:hover::before {
+            opacity: 1;
+            animation: twigg-gradient 3.5s ease-in-out infinite;
+        }
+
+        .signin-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 34px rgba(185, 0, 102, 0.20);
+        }
+
+
+        /* Button content stays above hover layer */
+        .signin-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .arrow {
+            font-size: 18px;
+            font-weight: 400;
+
+            transition: transform 0.35s ease;
+        }
+
+        .signin-button:hover .arrow {
+            transform: translate(3px, -3px);
+        }
+
+
+        /* =========================================================
+   SIGN UP
+========================================================= */
+
+        .signup {
+            margin-top: 30px;
+
+            color: #666;
+
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .signup a {
+            margin-left: 4px;
+
+            color: #111;
+
+            font-weight: 600;
+            text-decoration: none;
+
+            border-bottom: 1px solid #999;
+
+            padding-bottom: 2px;
+        }
+
+        .signup a:hover {
+            border-color: #111;
+        }
+
+
+        /* =========================================================
+   ANIMATIONS
+========================================================= */
+
+        @keyframes float-form-one {
+
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform:
+                    translate3d(3vw, -3vh, 0) rotate(-5deg) scale(1.05);
+            }
+        }
+
+        @keyframes float-form-two {
+
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0) rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform:
+                    translate3d(-3vw, 2vh, 0) rotate(3deg) scale(1.02);
+            }
+        }
+
+        @keyframes twigg-gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes card-appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+        /* =========================================================
+   RESPONSIVE
+========================================================= */
+
+        @media (max-width: 800px) {
+            .brand {
+                top: 28px;
+                left: 30px;
+                width: 105px;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+            body {
+                overflow: auto;
+            }
+
+            .login-page {
+                min-height: 100vh;
+                padding: 100px 20px 50px;
+            }
+
+            .brand {
+                top: 28px;
+                left: 22px;
+                width: 100px;
+            }
+
+            .login-card {
+                width: 100%;
+                min-height: auto;
+                padding: 36px 25px;
+                border-radius: 25px;
+
+                background: rgba(255, 255, 255, 0.27);
+
+                box-shadow:
+                    0 30px 70px rgba(0, 0, 0, 0.13),
+                    0 12px 30px rgba(0, 0, 0, 0.08),
+                    0 0 0 1px rgba(255, 255, 255, 0.10),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                    inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+            }
+
+            .heading {
+                margin-bottom: 34px;
+            }
+
+            .heading h1 {
+                font-size: 42px;
+                letter-spacing: -2.5px;
+            }
+
+            .background::before,
+            .background::after {
+                opacity: 0.60;
+            }
+
+            .background::before {
+                width: 100vw;
+                height: 100vw;
+                left: -15vw;
+                bottom: -10vh;
+            }
+
+            .background::after {
+                width: 90vw;
+                height: 90vw;
+                top: -20vh;
+                right: -10vw;
+            }
+        }
+
+
+        @media (max-width: 380px) {
+            .login-page {
+                padding-right: 14px;
+                padding-left: 14px;
+            }
+
+            .login-card {
+                padding: 30px 21px;
+            }
+        }
+
+
+        /* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+    <script>
+
+        function login() {
+            let data = [
+                { username: "user1@gmail.com", password: "pass1" },
+                { username: "user2@gmail.com", password: "pass2" },
+                { username: "user3@gmail.com", password: "pass3" }
+            ];
+            var x = document.getElementById("email").value;
+            var y = document.getElementById("password").value;
+            //alert(x);
+            //alert(y);
+            let result = data.find(function validateuser(userdetails) {
+                return userdetails.username === x && userdetails.password === y;
+            });
+            if (result) {
+                alert('Login Successful');
+            }
+            else {
+                alert('Login Failed');
+            }
+            // if (confirm('Thank You for Login')) {
+            //     alert('thank you for login');
+            // } else {
+            //     alert('login failed');
+            // }
+        }
+
+
+    </script>
+</head>
+
+<body>
+
+    <!-- Background -->
+    <div class="background">
+        <div class="grain"></div>
+    </div>
+
+
+    <!-- Login Page -->
+    <main class="login-page">
+
+        <!-- Twigg Logo -->
+        <div class="brand">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="225 425 630 240" preserveAspectRatio="xMidYMid meet"
+                aria-label="Twigg">
+
+                <defs>
+                    <linearGradient id="logo-gradient" gradientUnits="userSpaceOnUse" x1="217.2762" y1="575.5398"
+                        x2="365.8892" y2="438.8525">
+                        <stop offset="0" stop-color="#B90066" />
+                        <stop offset="0.5335" stop-color="#FB0838" />
+                        <stop offset="1" stop-color="#F6801E" />
+                    </linearGradient>
+                </defs>
+
+
+                <!-- Twigg wordmark -->
+                <g fill="#000000">
+
+                    <path
+                        d="M619.3,550.7l-15.8-43.5c-1-2.9-3.8-4.8-6.8-4.8h0c-3.1,0-5.8,1.9-6.8,4.8l-15.8,43.5l-18-48.2H538l28.9,71.8c1.1,2.8,3.8,4.6,6.7,4.6h0.3c3,0,5.7-1.8,6.8-4.6l16-40.9l16,40.9c1.1,2.8,3.8,4.6,6.8,4.6h0.3c3,0,5.6-1.8,6.7-4.6l28.9-71.8h-18.1L619.3,550.7z" />
+
+                    <rect x="662.4" y="502.5" width="17.5" height="76.4" />
+
+                    <path
+                        d="M671.1,467.5c-3,0-5.4,1-7.4,3c-2,2-2.9,4.5-2.9,7.5c0,3,1,5.5,2.9,7.5c2,2,4.4,3,7.4,3c3.1,0,5.6-1,7.5-3c1.9-2,2.9-4.5,2.9-7.5c0-3-1-5.5-2.9-7.5C676.7,468.5,674.2,467.5,671.1,467.5z" />
+
+                    <path
+                        d="M727.5,500.8c-20.3,0-36.7,16.4-36.7,36.7s16.4,36.7,36.7,36.7c20.3,0,36.7-16.4,36.7-36.7c0-6.3-1.6-12.2-4.4-17.4l4.4-2.5V504h-21.9C737.7,502,732.7,500.8,727.5,500.8z M727.5,557.4c-11,0-19.9-8.9-19.9-19.9s8.9-19.9,19.9-19.9c11,0,19.9,8.9,19.9,19.9S738.5,557.4,727.5,557.4z" />
+
+                    <path
+                        d="M727.5,597.6c-11,0-19.9-8.9-19.9-19.9h-16.8c0,20.3,16.4,36.7,36.7,36.7c20.3,0,36.7-16.4,36.7-36.7h-16.8C747.4,588.7,738.5,597.6,727.5,597.6z" />
+
+                    <path
+                        d="M813.6,597.6c-11,0-19.9-8.9-19.9-19.9h-16.8c0,20.3,16.4,36.7,36.7,36.7c20.3,0,36.7-16.4,36.7-36.7h-16.8C833.5,588.7,824.6,597.6,813.6,597.6z" />
+
+                    <path
+                        d="M850.3,504h-21.9c-4.5-2-9.5-3.1-14.8-3.1c-20.3,0-36.7,16.4-36.7,36.7s16.4,36.7,36.7,36.7c20.3,0,36.7-16.4,36.7-36.7c0-6.3-1.6-12.2-4.4-17.4l4.4-2.5V504z M813.6,557.4c-11,0-19.9-8.9-19.9-19.9s8.9-19.9,19.9-19.9c11,0,19.9,8.9,19.9,19.9S824.6,557.4,813.6,557.4z" />
+
+                    <polygon
+                        points="515.4,478 497.9,478 497.9,502.5 484.4,502.5 484.4,518.4 497.9,518.4 497.9,578.8 515.4,578.8 515.4,518.4 528.9,518.4 528.9,502.5 515.4,502.5" />
+
+                </g>
+
+
+                <!-- Gradient mark -->
+                <path fill="url(#logo-gradient)"
+                    d="M295.2,567.6v-130c-38.4,15.1-65.5,52.5-65.5,96.2c0,27.6,10.8,52.6,28.4,71.2l23.7-13.9C290.1,586.1,295.2,577.2,295.2,567.6z" />
+
+                <path fill="url(#logo-gradient)"
+                    d="M338,430.6c-9.8-0.5-19.4,0.4-28.5,2.5v27.4c0,9.7,5.2,18.7,13.6,23.5l112.1,64.4c0.6-4.1,0.9-8.3,1-12.5C437.4,480.5,393.5,433.2,338,430.6z" />
+
+                <path fill="url(#logo-gradient)"
+                    d="M380.8,551.6l-113.2,62.5c3.2,2.6,6.6,5.1,10.2,7.3c15.3,9.7,32.4,14.9,49.6,15.8c6.7,0.4,11.8,6.4,11.1,13c0,0.1,0,0.1,0,0.2c-1.4,7.6-5.2,16.5-5.2,16.5s72.7-33.5,98-100.7L408,552.1C399.7,547.1,389.3,546.9,380.8,551.6z" />
+
+            </svg>
+        </div>
+
+
+        <!-- Login Card -->
+        <section class="login-card">
+
+            <div class="card-glow"></div>
+
+            <div class="login-content">
+
+                <header class="heading">
+                    <div class="eyebrow">
+                        <span class="dot"></span>
+                        <p>WELCOME BACK</p>
+                    </div>
+
+                    <h1>
+                        Sign in<span class="period"></span>
+                    </h1>
+                </header>
+
+
+                <form id="loginForm">
+
+                    <!-- Email -->
+                    <div class="field">
+                        <label for="email">Email</label>
+
+                        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email"
+                            required>
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="field">
+
+                        <div class="password-header">
+                            <label for="password">Password</label>
+
+                            <a href="#">Forgot?</a>
+                        </div>
+
+                        <div class="password-wrapper">
+
+                            <input type="password" id="password" name="password" placeholder="Enter your password"
+                                autocomplete="current-password" required>
+
+                            <button type="button" class="show-password" id="showPassword" aria-label="Show password">
+                                Show
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Submit -->
+                    <button type="submit" class="signin-button" onclick="login()">
+                        <span>Sign in</span>
+                        <span class="arrow" aria-hidden="true">↗</span>
+                    </button>
+
+                </form>
+
+
+                <!-- Sign Up -->
+                <p class="signup">
+                    <span>New to Twigg?</span>
+                    <a href="#">Create an account</a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

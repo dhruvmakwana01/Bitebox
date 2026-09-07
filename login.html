@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up</title>
+</head>
+
+<body>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+
+        <h2>Login</h2>
+
+        <form>
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" placeholder="Enter your email">
+
+            <br><br>
+
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" name="password" placeholder="Enter your password">
+
+            <br><br>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <br>    
+
+        <button type="button" onclick="showSignup()">Sign Up</button>
+
+    </div>
+
+
+    <!-- Sign Up Form -->
+    <div id="signupForm" style="display: none;">
+
+        <h2>Sign Up</h2>
+
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name">
+
+            <br><br>
+
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" name="email" placeholder="Enter your email">
+
+            <br><br>
+
+            <label for="createPassword">Create Password</label>
+            <input type="password" id="createPassword" name="password" placeholder="Create a password">
+
+            <br><br>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <br>
+
+        <button type="button" onclick="showLogin()">Back to Login</button>
+
+    </div>
+
+    </script>
+
+</body>
+</html>
