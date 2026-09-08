@@ -741,34 +741,25 @@
         }
     </style>
     <script>
-
-        function login(e) {
-            e.preventDefault();
-            let data = [
-                { username: "user1@gmail.com", password: "pass1" },
-                { username: "user2@gmail.com", password: "pass2" },
-                { username: "user3@gmail.com", password: "pass3" }
-            ];
-            var x = document.getElementById("email").value;
-            var y = document.getElementById("password").value;
-            //alert(x);
-            //alert(y);
-            let result = data.find(function validateuser(userdetails) {
-                return userdetails.username === x && userdetails.password === y;
-            });
-            if (result) {
-                alert('Login Successful');
-                window.location.href = "BiteboxIndex.html";
-            }
-            else {
-                alert('Login Failed');
-            }
-            // if (confirm('Thank You for Login')) {
-            //     alert('thank you for login');
-            // } else {
-            //     alert('login failed');
-            // }
+       function login(){
+        let data= [
+            {username: "user1@gmail.com", password: "pass1"},
+            {username: "user2@gmail.com", password: "pass2"},
+            {username: "user3@gmail.com", password: "pass3"}
+        ];
+        var x= document.getElementById("email").value;
+        var y= document.getElementById("password").value;
+        let result= data.find (function validateuser (userdetails) {
+            return userdetails.username === x && userdetails.password === y;
+        });
+        if (result) {
+            alert ("Login Successful");
         }
+        else {
+            alert ("Login Failed");
+        }
+    }
+
 
 
     </script>
@@ -862,7 +853,7 @@
                 </header>
 
 
-                <form id="loginForm" onSubmit="login(event)">
+                <form id="loginForm">
 
                     <!-- Email -->
                     <div class="field">
@@ -897,7 +888,7 @@
 
 
                     <!-- Submit -->
-                    <button type="submit" class="signin-button">
+                    <button type="submit" class="signin-button" onclick="login()">
                         <span>Sign in</span>
                         <span class="arrow" aria-hidden="true">↗</span>
                     </button>
@@ -916,8 +907,6 @@
         </section>
 
     </main>
-
-
 
 
 </body>
