@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student|Profile</title>
+
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+        }
+
+        .profile {
+            width: 700px;
+            margin: 165px auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+        }
+
+        td {
+            padding: 3px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            width: 140px;
+            height: 20px;
+        }
+
+        textarea {
+            width: 400px;
+            height: 145px;
+        }
+
+        .create {
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile">
+
+        <h2>Create Profile</h2>
+
+        <form>
+
+            <table>
+
+                <tr>
+                    <td>
+                        <label for="fname">First Name:</label>
+                    </td>
+                    <td>
+                        <input type="text"
+                               id="fname"
+                               name="fname"
+                               placeholder="First Name"
+                               required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="lname">Last Name:</label>
+                    </td>
+                    <td>
+                        <input type="text"
+                               id="lname"
+                               name="lname"
+                               placeholder="Last Name"
+                               required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="dob">Date of Birth:</label>
+                    </td>
+                    <td>
+                        <input type="date"
+                               id="dob"
+                               name="dob"
+                               required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="age">Enter age:</label>
+                    </td>
+                    <td>
+                        <input type="number"
+                               id="age"
+                               name="age"
+                               placeholder="Age"
+                               step="1"
+                               required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label>Gender:</label>
+                    </td>
+                    <td>
+                        <input type="radio"
+                               id="male"
+                               name="gender"
+                               value="Male"
+                               checked
+                               required>
+                        <label for="male">Male</label>
+
+                        <input type="radio"
+                               id="female"
+                               name="gender"
+                               value="Female">
+                        <label for="female">Female</label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="current">Current Address:</label>
+                    </td>
+                    <td>
+                        <textarea id="current"
+                                  name="current"
+                                  required></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="permanent">Permanent Address:</label>
+                    </td>
+                    <td>
+                        <textarea id="permanent"
+                                  name="permanent"
+                                  required></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit"
+                               value="Create"
+                               class="create">
+                    </td>
+                </tr>
+
+            </table>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
