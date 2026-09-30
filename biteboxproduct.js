@@ -113,6 +113,8 @@ const products = [
     }
 ];
 
+const cart = [];
+
 
 products.forEach(function (product) {
     const card = document.createElement("div");
@@ -137,6 +139,27 @@ products.forEach(function (product) {
 
     const addtocart = document.createElement("button");
     addtocart.textContent = "Add";
+
+    addtocart.addEventListener("click", addBasketItems);
+    function addBasketItems() {
+        // alert (product.name);
+        const existingproduct = cart.find(function (prod) {
+            return prod.id === product.id;
+        });
+        if (existingproduct) {
+            existingproduct.quantity++;
+        }
+        else {
+            const item = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1
+            };
+            cart.push(item);
+        };
+        console.log(cart);
+    };
 
     section2.appendChild(productname);
     section2.appendChild(productprice);
