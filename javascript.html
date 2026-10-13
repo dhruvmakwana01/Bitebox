@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Form</title>
+</head>
+
+<body>
+    <form id="nameForm" onsubmit="getNames(event)">
+        <label for="firstName">First Name</label><br>
+        <input type="text" id="firstName" name="firstName"><br><br>
+        <label for="lastName">Last Name</label><br>
+        <input type="text" id="lastName" name="lastName"><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function getNames(event) {
+            event.preventDefault(); // stop the page from reloading
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            console.log("First Name: " + firstName);
+            console.log("Last Name: " + lastName);
+        }
+    </script>
+</body>
+
+</html>
